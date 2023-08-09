@@ -3,6 +3,7 @@ import com.influxdb.annotations.Measurement
 import com.influxdb.client.domain.WritePrecision
 import com.influxdb.client.kotlin.InfluxDBClientKotlinFactory
 import org.openqa.selenium.By
+import org.openqa.selenium.Capabilities
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.lang.System.getenv
@@ -18,6 +19,9 @@ val DB_AUTH_TOKEN = getenv("DB_AUTH_TOKEN") ?: "speedtest-admin-token"
 val DB_ORG = getenv("DB_ORG") ?: "speedtest"
 val DB_BUCKET = getenv("DB_BUCKET") ?: "speedtest"
 
+val BROWSER_OPTIONS: Capabilities = FirefoxOptions()
+    .addArguments("--headless")
+
 @Measurement(name = "speed")
 data class Speed(
     @Column val download: Int,
@@ -27,7 +31,7 @@ data class Speed(
 )
 
 suspend fun main() {
-    val driver = RemoteWebDriver(URL(BROWSER_URL), FirefoxOptions())
+    val driver = RemoteWebDriver(URL(BROWSER_URL), BROWSER_OPTIONS)
     driver.manage().timeouts().implicitlyWait(Duration.ofMinutes(1))
 
     driver.get(URL)

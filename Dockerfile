@@ -1,6 +1,8 @@
 FROM azul/zulu-openjdk-alpine:17 AS build
 
 WORKDIR /project
+ENV GRADLE_OPTS="-Dorg.gradle.daemon=false"
+
 COPY gradle.* gradlew ./
 COPY gradle ./gradle
 

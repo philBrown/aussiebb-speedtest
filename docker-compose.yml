@@ -2,13 +2,13 @@ services:
   browser:
     image: seleniarm/standalone-firefox:114.0
     shm_size: 2g
-    restart: always
+    restart: unless-stopped
     ports:
       - "4444:4444"
       - "7900:7900"
   db:
     image: influxdb:2.7-alpine
-    restart: always
+    restart: unless-stopped
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: speedtest

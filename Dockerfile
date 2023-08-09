@@ -1,15 +1,15 @@
-FROM azul/zulu-openjdk-alpine:17 AS build
+FROM gradle:8.2.1-jdk17 AS build
 
 WORKDIR /project
 
-COPY gradle.* gradlew ./
-COPY gradle ./gradle
+#COPY gradle.* gradlew ./
+#COPY gradle ./gradle
 
-RUN ./gradlew --version
+#RUN ./gradlew --version
 
 COPY . .
 
-RUN ./gradlew installDist
+RUN gradle installDist
 
 FROM azul/zulu-openjdk-alpine:17-jre-headless AS runtime
 

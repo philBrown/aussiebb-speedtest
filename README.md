@@ -43,10 +43,9 @@ You can build and run the application locally using any valid JDK 17.
 
 ### Docker
 
-Alternately, build and run the application via Docker Compose
+Alternately, run the application via Docker Compose
 
 ```shell
-docker compose build app
 docker compose run app
 ```
 

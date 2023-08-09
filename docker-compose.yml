@@ -24,12 +24,12 @@ services:
       - influxdb:/var/lib/influxdb2
 
   app:
+    image: gnoodl/aussiebb-speedtest:latest
     profiles:
       - app
     depends_on:
       - browser
       - db
-    build: .
     environment:
       BROWSER_URL: http://browser:4444
       DB_URL: http://db:8086

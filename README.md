@@ -17,7 +17,7 @@ Results are collected into an InfluxDB instance. Data collected includes:
 * Upload speed in `kbps`
 * Ping time in `ms`
 
-## Running
+## Setup
 
 The remote webdriver and InfluxDB are provided as Docker Compose services.
 
@@ -33,12 +33,28 @@ The InfluxDB UI can be accessed at <http://localhost:8086> using credentials
 _Note:_ Credentials and other configuration is done via environment variables in
 [docker-compose.yml](./docker-compose.yml).
 
-### Gradle
+### Configuration Environment Variables
 
-You can build and run the application locally using any valid JDK 17.
+| Name            | Description                              | Default value           |
+| --------------- | ---------------------------------------- | ----------------------- |
+| `BROWSER_URL`   | Location of the remote Firefox webdriver | `http://localhost:4444` |
+| `DB_URL`        | Location of the InfluxDB                 | `http://localhost:8086` |
+| `DB_AUTH_TOKEN` | InfluxDB auth token                      | `speedtest-admin-token` |
+| `DB_ORG`        | InfluxDB organisation                    | `speedtest`             |
+| `DB_BUCKET`     | InfluxDB bucket for speedtest results    | `speedtest`             |
+
+## Running
+
+Install dependencies...
 
 ```shell
-./gradlew run
+pip install -r requirements.txt
+```
+
+and run...
+
+```shell
+python speed-test.py
 ```
 
 ### Docker

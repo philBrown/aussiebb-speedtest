@@ -1,20 +1,12 @@
-FROM gradle:8.2.1-jdk17 AS build
-
-WORKDIR /project
-
-#COPY gradle.* gradlew ./
-#COPY gradle ./gradle
-
-#RUN ./gradlew --version
-
-COPY . .
-
-RUN gradle installDist
-
-FROM azul/zulu-openjdk-alpine:17-jre-headless AS runtime
+FROM python:3.11-alpine
 
 WORKDIR /app
 
-COPY --from=build /project/build/install/aussiebb-speedtest .
+RUN apk add build-base python3-dev
 
-CMD ./bin/aussiebb-speedtest
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY speed-test.py .
+
+CMD ["python", "speed-test.py"]

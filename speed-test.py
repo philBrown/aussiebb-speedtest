@@ -19,39 +19,35 @@ db_url = env.get('DB_URL', 'http://localhost:8086')
 db_token = env.get('DB_AUTH_TOKEN', 'speedtest-admin-token')
 db_org = env.get('DB_ORG', 'speedtest')
 db_bucket = env.get('DB_BUCKET', 'speedtest')
+timeout = env.get('TIMEOUT', '120')
 
 class Speed(namedtuple('Speed', ['download', 'upload', 'ping', 'timestamp'])):
     pass
 
 def main():
-    driver = webdriver.Remote(
-        command_executor=browser_url,
-        options=firefox_options
-    )
-    driver.implicitly_wait(60)
+    with webdriver.Remote(command_executor=browser_url, options=firefox_options) as driver:
+        driver.implicitly_wait(float(timeout))
 
-    print("Opening Aussie Broadband Speed Test")
-    driver.get('https://speed.aussiebroadband.com.au/')
+        print("Opening Aussie Broadband Speed Test")
+        driver.get('https://speed.aussiebroadband.com.au/')
 
-    frame = driver.find_element(By.TAG_NAME, 'iframe')
-    driver.switch_to.frame(frame)
+        frame = driver.find_element(By.TAG_NAME, 'iframe')
+        driver.switch_to.frame(frame)
 
-    go_button = driver.find_element(By.TAG_NAME, 'button')
+        go_button = driver.find_element(By.TAG_NAME, 'button')
 
-    print("Starting test")
-    go_button.click()
+        print("Starting test")
+        go_button.click()
 
-    driver.switch_to.default_content()
+        driver.switch_to.default_content()
 
-    print("Waiting for results...")
-    results = driver.find_elements(By.CSS_SELECTOR, '#results > strong:nth-child(n+2)')
-    assert len(results) == 3
+        print("Waiting for results...")
+        results = driver.find_elements(By.CSS_SELECTOR, '#results > strong:nth-child(n+2)')
+        assert len(results) >= 3, f'expected at least 3 stats, got {len(results)}'
 
-    [download, upload, ping] = list(map(lambda el: int(el.text), results))
+        [download, upload, ping] = list(map(lambda el: int(el.text) if el.text.isdecimal() else None, results))
 
-    print(f'Download: {download}kbps, Upload: {upload}kbps, Ping: {ping}ms')
-
-    driver.quit()
+        print(f'Download: {download}kbps, Upload: {upload}kbps, Ping: {ping}ms')
 
     speed = Speed(
         download=download,

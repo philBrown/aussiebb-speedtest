@@ -35,13 +35,14 @@ _Note:_ Credentials and other configuration is done via environment variables in
 
 ### Configuration Environment Variables
 
-| Name            | Description                              | Default value           |
-| --------------- | ---------------------------------------- | ----------------------- |
-| `BROWSER_URL`   | Location of the remote Firefox webdriver | `http://localhost:4444` |
-| `DB_URL`        | Location of the InfluxDB                 | `http://localhost:8086` |
-| `DB_AUTH_TOKEN` | InfluxDB auth token                      | `speedtest-admin-token` |
-| `DB_ORG`        | InfluxDB organisation                    | `speedtest`             |
-| `DB_BUCKET`     | InfluxDB bucket for speedtest results    | `speedtest`             |
+| Name            | Description                                   | Default value           |
+| --------------- | ----------------------------------------      | ----------------------- |
+| `BROWSER_URL`   | Location of the remote Firefox webdriver      | `http://localhost:4444` |
+| `DB_URL`        | Location of the InfluxDB                      | `http://localhost:8086` |
+| `DB_AUTH_TOKEN` | InfluxDB auth token                           | `speedtest-admin-token` |
+| `DB_ORG`        | InfluxDB organisation                         | `speedtest`             |
+| `DB_BUCKET`     | InfluxDB bucket for speedtest results         | `speedtest`             |
+| `TIMEOUT`       | Max wait time (seconds) for results to appear | `120`                   |
 
 ## Running
 

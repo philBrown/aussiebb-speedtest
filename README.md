@@ -22,7 +22,7 @@ Results are collected into an InfluxDB instance. Data collected includes:
 The remote webdriver and InfluxDB are provided as Docker Compose services.
 
 ```shell
-docker compose up
+docker compose up -d
 ```
 
 The InfluxDB UI can be accessed at <http://localhost:8086> using credentials

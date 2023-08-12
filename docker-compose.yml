@@ -2,9 +2,13 @@ services:
   browser:
     image: seleniarm/standalone-firefox:114.0
     shm_size: 2g
-    restart: unless-stopped
     environment:
       START_XVFB: false
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "-o", "/dev/null", "http://localhost:4444"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
     ports:
       - "4444:4444"
       - "7900:7900"
